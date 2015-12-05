@@ -1,0 +1,87 @@
+body,
+div,
+ul,
+li,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding:0;
+  margin:0;
+  font-family: "Roboto", sans-serif;
+}
+
+h1 {
+  font-size: 40px;
+  color: #f5a623;
+  line-height: 48px;
+  display: inline;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 24px;
+  color: #999;
+  line-height: 29px;
+  padding: 10px;
+}
+
+h3 {
+  font-style: italic;
+  font-size: 20px;
+  color: #000;
+  line-height: 22px;
+}
+
+h4 {
+  font-weight: bold;
+  font-size: 14px;
+  color: #4a4a4a;
+  line-height: 17px;
+}
+
+h2,
+h3,
+h4,
+li {
+  padding:10px;
+
+}
+img {
+  padding: 10px;
+  height: 500px;
+  width: auto;
+}
+#map {
+  height: 700px;
+  width: 100%;
+  padding-bottom: 5%;
+  background-color: #CCC;
+}
+
+.MyApp,
+.MyApp-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.MyApp-nav {
+  order: -1;
+}
+
+@media (min-width: 768px) {
+  .MyApp-body {
+    flex-direction: row;
+    flex: 1;
+  }
+  .MyApp-content {
+    flex: 1;
+  }
+  .MyApp-nav, .MyApp-ads {
+    /* 12em is the width of the columns */
+    flex: 0 0 12em;
+  }
+}

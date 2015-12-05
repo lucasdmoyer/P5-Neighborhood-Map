@@ -1,0 +1,76 @@
+//var geocoder = new google.maps.Geocoder();
+
+var markers = [];
+var markerWindows = [];
+var Loc = function(data){
+  this.location= ko.observable(data.location); //these are referred to as location()
+  this.address =ko.observable(data.address);
+  this.clickCount= ko.observable(data.clickCount);
+  this.imgSrc= ko.observable(data.imgSrc);
+  this.imgAttribution= ko.observable(data.imgAttribution);
+  this.products = ko.observableArray(data.products);
+  this.lat = ko.observable(data.lat);
+  this.lng = ko.observable(data.lng)
+};
+
+var octopus = function() {
+  //do self = this so this works correctly. THIS is the octopus... not the data
+  var self = this;
+  //this is a NEW array -- made to be an observable array
+  this.locations = ko.observableArray([]);
+  this.markers = ko.observableArray([]);
+  //this puts all the objects from the data model into an array you can use here
+  InitialLocations.forEach(function(locItem){
+    //add a new entry to the locList array corresponding to each data element in the data model
+    self.markers.push (new Loc(locItem));
+    self.locations.push(new Loc(locItem));
+
+  });
+};
+ko.applyBindings(new octopus);
+
+//create and set Google Map with marker
+function initialize() {
+	var mapCanvas = document.getElementById('map');
+		var mapOptions = {
+ 		center:  new google.maps.LatLng(45.203573, -91.895454),
+  		zoom: 9,
+  		mapTypeId: google.maps.MapTypeId.ROADMAP
+		}
+	var map = new google.maps.Map(mapCanvas, mapOptions)
+	//google.maps.event.addListener(button, 'click', toggleBounce);
+  for (i=0; i< InitialLocations.length; i++) {
+    markers[i] = new google.maps.Marker({
+      position: {lat: InitialLocations[i].lat, lng:InitialLocations[i].lng},
+      map: map,
+      title: InitialLocations[i].location,
+      animation: google.maps.Animation.DROP
+    }); //end marker
+  //create an array of infoWindow content
+  markerWindows.push(InitialLocations[i].address);
+  LinkMarkerToContent(markers[i], markerWindows[i]);
+	google.maps.event.addListener(markers[i], 'click', toggleBounce);
+  }
+  };
+
+//link infowindow to marker
+var LinkMarkerToContent=function(marker, contentString){
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+  marker.addListener('click', function() {
+    infowindow.open(marker.get('map'), marker);
+     setTimeout(function () { infowindow.close(); }, 5000);
+  });
+};
+//bounce markers on click, end after 1.5sec
+var toggleBounce = function(marker) {
+	var self = this;
+	if(self.getAnimation() !== null) {
+		self.setAnimation(null);
+	} else {
+		self.setAnimation(google.maps.Animation.BOUNCE);
+		setTimeout(function(){self.setAnimation(null); }, 1500);
+	}
+}
+google.maps.event.addDomListener(window, 'load', initialize);
