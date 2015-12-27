@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Food in Dunn County</title>
-    <meta name="viewport" content="width=device-width">
-    <link href="css/style.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-
+  <meta charset="UTF-8">
+  <title>Food in Dunn County</title>
+  <meta name="viewport" content="width=device-width">
+  <link href="css/style.css" rel="stylesheet">
+  <script  src="https://maps.googleapis.com/maps/api/js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 
 <body class="MyApp">
   <header><h1>Western Wisconsin Food</h2></header>
-  <div class="MyApp-body">
-    <main  id="map" class="MyApp-content">Map of Locations</main>
-    <nav class="MyApp-nav">
-      <h2>Search</h2>
-      <br/>
-      <ul id="loc-list" data-bind="foreach: markers">
-        <li data-bind = "text: location "></li>
-      </ul>
+    <div class="MyApp-body">
+      <main  id="map" class="MyApp-content">Map of Locations</main>
+      <nav class="MyApp-nav">
+        <p><input placeholder="Search…" type="text" data-bind="value: filter, valueUpdate: 'keyup'" autocomplete="off"></p>
+        <br/>
+        <ul id="loc-list" data-bind="foreach: markers">
+          <li data-bind = "text: location " "attr={text:location, display: hidden}"></li>
+          <img class="streetimg" data-bind = "attr: {src: streetView}">
+        </ul>
       </nav>
-  </div>
+    </div>
   <footer>…</footer>
       <script src="js\knockout-3.4.0.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <script src="js\model.js"></script>
       <script src="js\view.js"></script>
 </body>

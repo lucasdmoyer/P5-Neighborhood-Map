@@ -2,6 +2,13 @@
 
 var markers = [];
 var markerWindows = [];
+ko.utils.stringStartsWith = function (string, startsWith) {
+       string = string || "";
+       if (startsWith.length > string.length)
+           return false;
+       return string.substring(0, startsWith.length) === startsWith;
+   };
+
 var Loc = function(data){
   this.location= ko.observable(data.location); //these are referred to as location()
   this.address =ko.observable(data.address);
@@ -10,31 +17,46 @@ var Loc = function(data){
   this.imgAttribution= ko.observable(data.imgAttribution);
   this.products = ko.observableArray(data.products);
   this.lat = ko.observable(data.lat);
-  this.lng = ko.observable(data.lng)
-};
+  this.lng = ko.observable(data.lng);
+  this.hidden = ko.observable(data.hidden);
+  this.streetView = ko.computed(function() {
+      return "https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" +this.address()+ "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik"},this);
 
+};
 var octopus = function() {
   //do self = this so this works correctly. THIS is the octopus... not the data
   var self = this;
   //this is a NEW array -- made to be an observable array
-  this.locations = ko.observableArray([]);
   this.markers = ko.observableArray([]);
+  //tied to the search input form...
+  this.filter = ko.observable('');
+
+  this.filteredItems = ko.computed(function() {
+      var filter = this.filter().toLowerCase();
+      if (!filter) {
+          return this.markers();
+      } else {
+          return ko.utils.arrayFilter(this.markers(), function(item) {
+              return ko.utils.stringStartsWith(item.location().toLowerCase(), filter);
+          });
+      }
+  }, this);
   //this puts all the objects from the data model into an array you can use here
   InitialLocations.forEach(function(locItem){
     //add a new entry to the locList array corresponding to each data element in the data model
     self.markers.push (new Loc(locItem));
-    self.locations.push(new Loc(locItem));
-
+    //self.locations.push(new Loc(locItem));
   });
 };
 ko.applyBindings(new octopus);
+
 
 //create and set Google Map with marker
 function initialize() {
 	var mapCanvas = document.getElementById('map');
 		var mapOptions = {
- 		center:  new google.maps.LatLng(45.203573, -91.895454),
-  		zoom: 9,
+ 		center:  new google.maps.LatLng(44.955241, -92.075459),
+  		zoom: 11,
   		mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
 	var map = new google.maps.Map(mapCanvas, mapOptions)
@@ -74,3 +96,8 @@ var toggleBounce = function(marker) {
 	}
 }
 google.maps.event.addDomListener(window, 'load', initialize);
+
+var searchList = function(searchString) {
+  //iterate thru the list of items in knockout array and set hidden characteristic
+
+}

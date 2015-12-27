@@ -7,18 +7,20 @@ var InitialLocations = [
     url: 'https://www.facebook.com/Rick-Pegs-Pleasant-View-Inn-134908423353365/',
     nicknames: [  { prod: 'Friday Lunch Buffet' , price: 9},
       { prod: 'Chicken Fingers' , price:10}
-      ]
+      ],
+    hidden: false
     },
 
     {clickCount: 0,
-    location: 'Chetek Cafe',
-    address: '805 2nd St Chetek WI 54728',
-    lat: 45.316497,
-    lng: -91.65131429999997,
-    url: 'http://chetekcafe.com/',
-    nicknames: [  { prod: 'German Specialities' , price: 9},
-      { prod: 'Breakfast Buffet' , price:10}
-      ]
+    location: 'Glenwood Cafe',
+    address: '106 W Oak St, Glenwood City, WI 54013',
+    lat: 45.058675,
+    lng: -92.172302,
+    url: 'https://www.facebook.com/The-Cafe-in-Glenwood-City-363650320376321/',
+    nicknames: [  { prod: 'Soups' , price: 9},
+      { prod: 'Breakfast' , price:10}
+      ],
+    hidden: false
     },
 
     {clickCount: 0,
@@ -29,18 +31,20 @@ var InitialLocations = [
     url: 'https://www.facebook.com/pages/Chias-Market/217119665150531',
     nicknames: [  { prod: 'Pho' , price: 9},
       { prod: 'Hmong Specialities' , price:10}
-      ]
+      ],
+    hidden: false
     },
 
     {clickCount: 0,
-    location: 'Glenwood Cafe',
-    address: '116 E Oak St, Glenwood City WI 54013',
-    lat: 45.058881,
-    lng: -92.17187189999999,
-    url: 'https://www.facebook.com/The-Cafe-in-Glenwood-City-363650320376321/',
-    nicknames: [  { prod: 'BBQ Ribs' , price: 9},
-      { prod: 'Cafe Fair' , price:10}
-      ]
+    location: 'Lucette Brewing',
+    address: '910 Hudson Rd, Menomonie, WI',
+    lat: 44.875870,
+    lng: -91.940163,
+    url: 'www.lucettebrewing.com',
+    nicknames: [  { prod: 'Beer' , price: 9},
+      { prod: 'Pizza' , price:10}
+      ],
+    hidden: true
     },
 
     {clickCount: 0,
@@ -49,7 +53,20 @@ var InitialLocations = [
     lat: 44.8755183,
     lng: -91.91934220000002,
     url: 'http://www.eatmyfish.com/',
-    nicknames: [  { prod: 'BBQ Ribs' , price: 9},
-      { prod: 'Cafe Fair' , price:10}
-      ]
+    nicknames: [  { prod: 'Beer' , price: 9},
+      { prod: 'Fish' , price:10}
+      ],
+    hidden:false
+    },
+
+    {clickCount: 0,
+    location: 'Menomonie Co-op',
+    address: '814 Main St East, Menomonie WI 54751',
+    lat: 44.876767,
+    lng: -91.920057,
+    url: 'http://www.menomoniemarket.com/',
+    nicknames: [  { prod: 'Soups' , price: 9},
+      { prod: 'Steam Table' , price:10}
+      ],
+    hidden:false
     }]
