@@ -28,24 +28,28 @@ var octopus = function() {
   var self = this;
   //this is a NEW array -- made to be an observable array
   this.markers = ko.observableArray([]);
-  //tied to the search input form...
   this.filter = ko.observable('');
 
   this.filteredItems = ko.computed(function() {
-      var filter = this.filter().toLowerCase();
-      if (!filter) {
+      var lcFilter = this.filter().toLowerCase();
+      if (!lcFilter) {
+          //if there is no filter, then return the whole list
           return this.markers();
-      } else {
+        }
+      else {
+        //if there is a filter then use arrayFilter to shorten the list
           return ko.utils.arrayFilter(this.markers(), function(item) {
-              return ko.utils.stringStartsWith(item.location().toLowerCase(), filter);
-          });
-      }
+            var string = item.location().toLowerCase();
+             if( string.search(lcFilter) >= 0 )
+              {return true;}
+              else {return false;}
+            });
+          }
   }, this);
   //this puts all the objects from the data model into an array you can use here
   InitialLocations.forEach(function(locItem){
     //add a new entry to the locList array corresponding to each data element in the data model
     self.markers.push (new Loc(locItem));
-    //self.locations.push(new Loc(locItem));
   });
 };
 ko.applyBindings(new octopus);
@@ -67,9 +71,13 @@ function initialize() {
       map: map,
       title: InitialLocations[i].location,
       animation: google.maps.Animation.DROP
-    }); //end marker
+    });
   //create an array of infoWindow content
-  markerWindows.push(InitialLocations[i].address);
+
+  markerWindows.push(InitialLocations[i].location + "<br/>"+ InitialLocations[i].address
+   + "<br/><img src='https://maps.googleapis.com/maps/api/streetview?size=100x50&location="+ InitialLocations[i].address
+   + "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik>" );
+
   LinkMarkerToContent(markers[i], markerWindows[i]);
 	google.maps.event.addListener(markers[i], 'click', toggleBounce);
   }
@@ -81,6 +89,7 @@ var LinkMarkerToContent=function(marker, contentString){
     content: contentString
   });
   marker.addListener('click', function() {
+    console.log();
     infowindow.open(marker.get('map'), marker);
      setTimeout(function () { infowindow.close(); }, 5000);
   });
@@ -96,8 +105,3 @@ var toggleBounce = function(marker) {
 	}
 }
 google.maps.event.addDomListener(window, 'load', initialize);
-
-var searchList = function(searchString) {
-  //iterate thru the list of items in knockout array and set hidden characteristic
-
-}

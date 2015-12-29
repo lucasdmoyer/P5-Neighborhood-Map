@@ -6,10 +6,16 @@ DONE: Write code required to display map markers identifying a number of locatio
 This is the set of locations on which you will be searching and filtering in step 5. Your project should include at least 5 locations.
 
 To Do:
-Implement the search bar functionality to search and filter your map markers displayed in step 4. The search function should filter on markers that already show up. Simply providing a search function through a third-party API and displaying the results is not enough.
-DONE: Implement a list view of the set of locations defined in step 4, Searching and filtering the locations via the search bar will filter the list view and map marker locations accordingly.
+Implement the search bar functionality to search and filter your map markers displayed in step 4.
+ The search function should filter on markers that already show up.
+  Simply providing a search function through a third-party API and displaying the results is not enough.
+  I have a filteredArray but i'm not sure how to connect the markers array i built for the initial locations to this filtered array
+  (which is a ko.computed)
+DONE: Implement a list view of the set of locations defined in step 4,
+Searching and filtering the locations via the search bar will filter the list view and map marker locations accordingly.
 
-Add additional functionality using third-party APIs when a map marker, or list view entry is clicked (ex. Yelp reviews, Wikipedia, Flickr images, etc). If you need a refresher on making AJAX requests to third-party servers, check out our Intro to AJAX course.
+Add additional functionality using third-party APIs when a map marker, or list view entry is clicked
+ (ex. Yelp reviews, Wikipedia, Flickr images, etc). If you need a refresher on making AJAX requests to third-party servers, check out our Intro to AJAX course.
 Add additional functionality to animate a map marker when either the list item associated with it
   or DONE: the map marker itself is selected.
 Add additional functionality to open an infoWindow with the information described in step 7 when either a location is selected from the list view
