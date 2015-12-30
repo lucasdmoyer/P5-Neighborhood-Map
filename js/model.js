@@ -8,7 +8,7 @@ var InitialLocations = [
     nicknames: [  { prod: 'Friday Lunch Buffet' , price: 9},
       { prod: 'Chicken Fingers' , price:10}
       ],
-    hidden: false
+    visible: true
     },
 
     {clickCount: 0,
@@ -20,7 +20,7 @@ var InitialLocations = [
     nicknames: [  { prod: 'Soups' , price: 9},
       { prod: 'Breakfast' , price:10}
       ],
-    hidden: false
+    visible: true
     },
 
     {clickCount: 0,
@@ -32,7 +32,7 @@ var InitialLocations = [
     nicknames: [  { prod: 'Pho' , price: 9},
       { prod: 'Hmong Specialities' , price:10}
       ],
-    hidden: false
+    visible: true
     },
 
     {clickCount: 0,
@@ -44,7 +44,7 @@ var InitialLocations = [
     nicknames: [  { prod: 'Beer' , price: 9},
       { prod: 'Pizza' , price:10}
       ],
-    hidden: true
+    visible: true
     },
 
     {clickCount: 0,
@@ -56,7 +56,7 @@ var InitialLocations = [
     nicknames: [  { prod: 'Beer' , price: 9},
       { prod: 'Fish' , price:10}
       ],
-    hidden:false
+    visible:true
     },
 
     {clickCount: 0,
@@ -68,5 +68,5 @@ var InitialLocations = [
     nicknames: [  { prod: 'Soups' , price: 9},
       { prod: 'Steam Table' , price:10}
       ],
-    hidden:false
+    visible:true
     }]
