@@ -1,4 +1,4 @@
-var InitialLocations = [
+var MyListOfLocations = [
     {clickCount: 0,
     location: 'Pegs Pleasant View',
     address: '3015 US Highway 12, Wilson, WI',
@@ -8,7 +8,7 @@ var InitialLocations = [
     nicknames: [  { prod: 'Friday Lunch Buffet' , price: 9},
       { prod: 'Chicken Fingers' , price:10}
       ],
-    visible: true
+    visible: true,
     },
 
     {clickCount: 0,
