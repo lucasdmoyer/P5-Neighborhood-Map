@@ -1,5 +1,5 @@
 # P5-Neighborhood-Map
-To view use : meckmeier.github.io/p5-Neighborhood-Map
+To view use : http://meckmeier.github.io/P5-Neighborhood-Map/index.html
 
 This is a single-page application featuring a map of selected National parks. Included in this application are map markers for each park, a search function to easily find these parks on the map, and a list to support simple browsing of all parks.
 
