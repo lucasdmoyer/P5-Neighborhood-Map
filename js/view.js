@@ -90,8 +90,8 @@
    		 center:  new google.maps.LatLng(44.955241, -92.075459),
        zoom: 4,
     	 mapTypeId: google.maps.MapTypeId.ROADMAP
-  		 }
-      map = new google.maps.Map(mapCanvas, mapOptions)
+     };
+    map = new google.maps.Map(mapCanvas, mapOptions);
 
     //this seems to need to be AFTER the construct of the map to work.
     //set up the menu
@@ -119,11 +119,6 @@
       drawer.classList.remove('open');
       })
 
-    //set up the markers
-
-
-
-    //console.log('The first element is ' + octo.koMarkerArray()[0].location);
     for (i=0; i< markers.length; i++) {
       LinkMarkerToContent(markers[i].markerItem, markers[i].contentForWindow);
       markers[i].markerItem.setMap(map);
@@ -134,7 +129,7 @@
   //link infowindow to marker
   var LinkMarkerToContent=function(marker, contentString){
     var infowindow = new google.maps.InfoWindow({
-      content: contentString
+      content: contentString;
       });
 
     marker.addListener('click', function() {
@@ -150,7 +145,7 @@
   	} else {
   		self.setAnimation(google.maps.Animation.BOUNCE);
   		setTimeout(function(){self.setAnimation(null); }, 1500);
-  	};
+  	}
   };
 function initRoutine()
 {
