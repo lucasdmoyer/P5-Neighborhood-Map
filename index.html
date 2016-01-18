@@ -1,31 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Food in Dunn County</title>
-  <meta name="viewport" content="width=device-width">
-  <link href="css/style.css" rel="stylesheet">
-  <script  src="https://maps.googleapis.com/maps/api/js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mary's Neighborhood Map</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script  src="https://maps.googleapis.com/maps/api/js"></script>
 
-<body class="MyApp">
-  <header><h1>Western Wisconsin Food</h2></header>
-    <div class="MyApp-body">
-      <main  id="map" class="MyApp-content">Map of Locations</main>
-      <nav class="MyApp-nav">
-        <p><input placeholder="Search…" type="text" data-bind="value: filter, valueUpdate: 'keyup'" autocomplete="off"></p>
-        <br/>
-        <ul id="loc-list" data-bind="foreach: filteredItems">
-          <li data-bind = "text: location " "attr={text:location, display: hidden}"></li>
-          <img class="streetimg" data-bind = "attr: {src: streetView}">
-        </ul>
-      </nav>
-    </div>
-  <footer>…</footer>
-      <script src="js\knockout-3.4.0.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <script src="js\model.js"></script>
-      <script src="js\view.js"></script>
-</body>
-</html>
+  </head>
+  <body>
+    <nav id="drawer" class="dark_blue">
+      <ul id="search">
+        <li><input placeholder="Search…" type="text" data-bind="value: filter, valueUpdate: 'keyup'" autocomplete="off"></li></ul>
+      <ul id="loc-list" data-bind="foreach: filteredItems">
+        <li data-bind="text: location, css: { selected: location == $root.chosenMarker()}, click: $parent.goToMarker"></li>
+      </ul>
+      <ul id="exit">
+        <li class="exitMenu">Exit Menu</li>
+      </ul>
+    </nav>
+    <a id="menu">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+        <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+      </svg>
+    </a>
+    <main  id="map">
+    </main>
+
+
+    <script src="js/knockout-3.4.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/modeltopNP.js"></script>
+    <script src="js/view.js"></script>

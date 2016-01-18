@@ -1,4 +1,4 @@
-var MyListOfLocations = [
+var MyListOfPlaces = [
     {clickCount: 0,
     location: 'Pegs Pleasant View',
     address: '3015 US Highway 12, Wilson, WI',

@@ -1,0 +1,128 @@
+/*
+// we have to give it access to the map object, so that
+// it can register and de-register itself
+var Pin = function Pin(map, name, lat, lon, text) {
+  var marker;
+
+  this.name = ko.observable(name);
+  this.lat  = ko.observable(lat);
+  this.lon  = ko.observable(lon);
+  this.text = ko.observable(text);
+
+  marker = new google.maps.Marker({
+    position: new google.maps.LatLng(lat, lon),
+    animation: google.maps.Animation.DROP
+  });
+
+  this.isVisible = ko.observable(false);
+
+  this.isVisible.subscribe(function(currentState) {
+    if (currentState) {
+      marker.setMap(map);
+    } else {
+      marker.setMap(null);
+    }
+  });
+
+  this.isVisible(true);
+}
+self.filterPins = ko.computed(function () {
+    var search  = self.query().toLowerCase();
+
+    return ko.utils.arrayFilter(self.pins(), function (pin) {
+        var doesMatch = pin.name().toLowerCase().indexOf(search) >= 0;
+
+        pin.isVisible(doesMatch);
+
+        return doesMatch;
+    });
+})
+
+pin = new Pin(map, 1, 2, 'text')
+*/
+
+/*
+$(function(){
+var model = {
+//data
+  function(data){
+    this.location= data.location;//ko.observable(data.location); //these are referred to as location()
+    this.address =data.address;//ko.observable(data.address);
+    this.lat = data.lat;//ko.observable(data.lat);
+    this.lng = data.lng;//ko.observable(data.lng);
+    this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" +data.address+ "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik"
+    //ko.computed(function() {
+    //    return "https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" +this.address()+ "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik"},this);
+    this.visible = ko.observable(data.visible);
+    this.contentForWindow = data.location + "<br/><img src=\"https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" +data.address+ "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik\">'"
+    this.koMarkerItem = ko.observable(0);
+    this.MarkerItem =new google.maps.Marker({
+      position: {lat: data.lat, lng:data.lng},
+      //map: map,
+      title:data.location,
+      animation: google.maps.Animation.DROP,
+      visible:  data.visible
+      });
+    };
+  init:   MyListOfLocations.forEach(function(datapoint){
+      //add a new entry to the locList array correspond ing to each data element in the data model
+      //this is the variable defined with ko observables outside the octopus
+      // you need to do this to create the full list of locations that you use to initialize the view
+      self.koMarkerArray.push (new Loc(datapoint));
+      //parallel none ko array
+      Markers.push(new Loc(datapoint));
+    });
+  add: function(obj) {
+          //build data objects... uses push
+      },
+  getAllNotes: function() {
+          return //something;
+      }
+  };
+
+
+  var octopus = {
+      addNewNote: //do something and then call
+          view.render();
+      },
+
+      getNotes: function() {
+          return model.getAllNotes();
+      },
+
+      init: function() {
+          model.init();
+          view.init();
+      }
+  };
+
+
+  var view = {
+      init: function() {
+        //uses dom objects to build elements
+          this.noteList = $('#notes');
+          var newNoteForm = $('#new-note-form');
+          var newNoteContent = $('#new-note-content');
+          newNoteForm.submit(function(e){
+            //dom action -- calls octopus
+              octopus.addNewNote(newNoteContent.val());
+              newNoteContent.val('');
+              e.preventDefault();
+          });
+          view.render();
+      },
+      render: function(){
+        //clears and rebuilds
+          var htmlStr = '';
+          octopus.getNotes().forEach(function(note){
+              htmlStr += '<li class="note">'+
+                      note.content +
+                  '</li>';
+          });
+          this.noteList.html( htmlStr );
+      }
+  };
+//outside of the model view octopus objects
+  octopus.init();
+});
+*/
