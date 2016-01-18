@@ -1,23 +1,23 @@
 
   var markers = [];
-  var markerWindows = [];
+  var nbrMarkers;
   var map;
   var Loc = function(data){
     this.location= data.location;//ko.observable(data.location); //these are referred to as location()
     this.address =data.address;//ko.observable(data.address);
     this.lat = data.lat;//ko.observable(data.lat);
     this.lng = data.lng;//ko.observable(data.lng);
-    this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" +data.lat+ "," +data.lng + "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik"
+    this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" +data.lat+ "," +data.lng + "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik";
     this.visible = ko.observable(data.visible);
-    this.nyt = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + data.location + "," + data.address + "&page=2&sort=newest&api-key=a83fb0e20722ea3a4e8b4b05dda2786f:8:38135839"
-    this.contentForWindow = data.location + "<br/><img src=\"https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" + data.location +" " + data.address  + "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik\">'"
+    this.nyt = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + data.location + "," + data.address + "&page=2&sort=newest&api-key=a83fb0e20722ea3a4e8b4b05dda2786f:8:38135839";
+    this.contentForWindow = data.location + "<br/><img src=\"https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" + data.location +" " + data.address  + "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik\">'";
     //this.koMarkerItem = ko.observable(0);
-    this.MarkerItem =new google.maps.Marker({
-      position: {lat: data.lat, lng:data.lng},
-      title:data.location,
-      animation: google.maps.Animation.DROP,
-      visible:  data.visible
-    });
+    this.markerItem  =new google.maps.Marker({
+        position: {lat: data.lat, lng:data.lng},
+        title: data.location,
+        animation: google.maps.Animation.DROP,
+        visible:  data.visible
+    })
   };
 //MV - the only place where you can access the MODEL AND the VIEW
 // MODEL = MyListOfPlaces
@@ -36,13 +36,13 @@
       //used for the markers on the google map
       markers.push (new Loc(datapoint));
       });
-
+      nbrMarkers = markers.length;
     //console.log('The first element is ' + this.koMarkerArray()[0].location);
     this.filter = ko.observable('');
     //BEHAVIORS
     this.goToMarker = function(x) {
         self.chosenMarker(x.location);
-        for (i=0; i < markers.length; i++)
+        for (i=0; i < nbrMarkers; i++)
           {if (x.location == markers[i].title)
             {
               google.maps.event.trigger(markers[i], 'click');
@@ -54,17 +54,20 @@
       var lcFilter = this.filter().toLowerCase();
       if (!lcFilter) {
           //if there is no filter, then return the whole list
+          for (i=0; i< nbrMarkers; i++) {
+            markers[i].markerItem.setVisible(true);
+          }
           return this.koMarkerArray();}
         else {
           //if there is a filter then use arrayFilter to shorten the list
           return ko.utils.arrayFilter(this.koMarkerArray(), function(item) {
             var string = item.location.toLowerCase();
-            for (i=0; i < markers.length; i++) {
-              var str2 = markers[i].MarkerItem.title.toLowerCase();
+            for (i=0; i < nbrMarkers; i++) {
+              var str2 = markers[i].markerItem.title.toLowerCase();
               if(str2.search(lcFilter) >=0)
-                {markers[i].MarkerItem.setVisible(true);}
+                {markers[i].markerItem.setVisible(true);}
               else
-                {markers[i].MarkerItem.setVisible(false);}
+                {markers[i].markerItem.setVisible(false);}
               };
           if( string.search(lcFilter) >= 0 )
               {return true;}
@@ -74,8 +77,7 @@
           };
     }, this);
   };
-  var octo = new Octopus;
-  ko.applyBindings(octo);
+
 
 //VIEW tasks:
   //create and set Google Map with marker
@@ -89,10 +91,14 @@
        zoom: 4,
     	 mapTypeId: google.maps.MapTypeId.ROADMAP
   		 }
-  	 map = new google.maps.Map(mapCanvas, mapOptions)
+      map = new google.maps.Map(mapCanvas, mapOptions)
 
     //this seems to need to be AFTER the construct of the map to work.
     //set up the menu
+    //TODO: According to requirements JQuery and vanilla JS usage should be minimized to manipulate DOM objects. Any click events can be easily implemented via Knockout observbles and data-bindings.
+    //Here is an example how you can manipulate with styles using Knockout:
+    //http://knockoutjs.com/documentation/style-binding.html
+    //http://knockoutjs.com/documentation/css-binding.html
     var menuControl = document.getElementById("menu");
       map.controls[google.maps.ControlPosition.TOP_RIGHT].push(menuControl);
       menuControl.addEventListener('click', function(e) {
@@ -114,13 +120,16 @@
       })
 
     //set up the markers
+
+
+
     //console.log('The first element is ' + octo.koMarkerArray()[0].location);
     for (i=0; i< markers.length; i++) {
-      LinkMarkerToContent(markers[i].MarkerItem, markers[i].contentForWindow);
-      markers[i].MarkerItem.setMap(map);
-    	google.maps.event.addListener(markers[i].MarkerItem, 'click', toggleBounce);
+      LinkMarkerToContent(markers[i].markerItem, markers[i].contentForWindow);
+      markers[i].markerItem.setMap(map);
+    	google.maps.event.addListener(markers[i].markerItem, 'click', toggleBounce);
     }
-    };
+};
 
   //link infowindow to marker
   var LinkMarkerToContent=function(marker, contentString){
@@ -143,5 +152,13 @@
   		setTimeout(function(){self.setAnimation(null); }, 1500);
   	};
   };
-
-  google.maps.event.addDomListener(window, 'load', viewThing);
+function initRoutine()
+{
+  var octo = new Octopus;
+  ko.applyBindings(octo);
+  google.maps.event.addDomListener(window, 'load', function() {
+    viewThing()});
+  }
+function errorHandling(){
+  console.log("there was an error in the google load");
+}
