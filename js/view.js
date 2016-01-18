@@ -43,9 +43,9 @@
     this.goToMarker = function(x) {
         self.chosenMarker(x.location);
         for (i=0; i < nbrMarkers; i++)
-          {if (x.location == markers[i].title)
+          {if (x.location == markers[i].markerItem.title)
             {
-              google.maps.event.trigger(markers[i], 'click');
+              google.maps.event.trigger(markers[i].markerItem, 'click');
             };
           };
         };
@@ -129,12 +129,12 @@
   //link infowindow to marker
   var LinkMarkerToContent=function(marker, contentString){
     var infowindow = new google.maps.InfoWindow({
-      content: contentString;
+      content: contentString
       });
 
     marker.addListener('click', function() {
       infowindow.open(marker.get('map'), marker);
-       setTimeout(function () { infowindow.close(); }, 5000);
+      setTimeout(function () { infowindow.close(); }, 5000);
     });
   };
   //bounce markers on click, end after 1.5sec
