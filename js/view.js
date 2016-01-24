@@ -137,10 +137,10 @@
             //items.push("<li class ='article' id='" + val.web_url + "''>" +  val.headline + "</li>");
               items.push("<li id='articles'><a href='" + val.web_url + "'>" + val.headline.main + "</a>" + "<p>" + val.snippet + "</a></li>");//
               x=x + "<li id='articles'><a href='" + val.web_url + "'>" + val.headline.main + "</a>" + "<p>" + val.snippet + "</a></li>";
-              console.log('inside loop');
-              console.log(contentString);
-              console.log(x);
-              console.log(items);
+              //console.log('inside loop');
+              //console.log(contentString);
+              //console.log(x);
+              //console.log(items);
            });
          });
            //but not here outside the loop... but both variables are defined outside the loop... so what am imissing?
@@ -154,13 +154,15 @@
                }
                    });
 */
-console.log('outside loop');
+//console.log('outside loop');
+//console.log(contentString);
 console.log(contentString);
 console.log(x);
-console.log(items);
-
+//console.log(items);
+var FinalStr = contentString + x;
+console.log(FinalStr);
     var infowindow = new google.maps.InfoWindow({
-      content: contentString
+      content: FinalStr
       });
     map.addListener('click',function(){
       if (infowindow.opened){
