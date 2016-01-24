@@ -1,5 +1,6 @@
 
   var markers = [];
+  var items =[];
   var nbrMarkers;
   var map;
   var Loc = function(data){
@@ -9,15 +10,15 @@
     this.lng = data.lng;//ko.observable(data.lng);
     this.streetView = "https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" +data.lat+ "," +data.lng + "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik";
     this.visible = ko.observable(data.visible);
-    this.nyt = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + data.location + "," + data.address + "&page=2&sort=newest&api-key=a83fb0e20722ea3a4e8b4b05dda2786f:8:38135839";
-    this.contentForWindow = data.location + "<br/><img src=\"https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" + data.location +" " + data.address  + "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom-mZOiik\">'";
+    this.nyt = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q='" + data.location + "'&fq=source\:\(\"The New York Times\"\) AND news_desk\:\(\"Travel\"\)&page=1&sort=newest&api-key=a83fb0e20722ea3a4e8b4b05dda2786f:8:38135839";
+    this.contentForWindow = data.location + "<br/><img src=\"https://maps.googleapis.com/maps/api/streetview?size=100x50&location='" + data.location +" " + data.address  + "'key=AIzaSyAaeEKsxpkvy9N4aNx4GKYd7eom\-mZOiik\">'";
     //this.koMarkerItem = ko.observable(0);
     this.markerItem  =new google.maps.Marker({
         position: {lat: data.lat, lng:data.lng},
         title: data.location,
         animation: google.maps.Animation.DROP,
         visible:  data.visible
-    })
+    });
   };
 //MV - the only place where you can access the MODEL AND the VIEW
 // MODEL = MyListOfPlaces
@@ -46,8 +47,8 @@
           {if (x.location == markers[i].markerItem.title)
             {
               google.maps.event.trigger(markers[i].markerItem, 'click');
-            };
-          };
+            }
+          }
         };
 
     this.filteredItems = ko.computed(function() {
@@ -68,13 +69,13 @@
                 {markers[i].markerItem.setVisible(true);}
               else
                 {markers[i].markerItem.setVisible(false);}
-              };
+              }
           if( string.search(lcFilter) >= 0 )
               {return true;}
             else
               {return false;}
               });
-          };
+          }
     }, this);
   };
 
@@ -117,24 +118,66 @@
 
     exitStep.addEventListener('click',function(){
       drawer.classList.remove('open');
-      })
+      });
 
     for (i=0; i< markers.length; i++) {
-      LinkMarkerToContent(markers[i].markerItem, markers[i].contentForWindow);
+      LinkMarkerToContent(markers[i].markerItem, markers[i].contentForWindow, markers[i].nyt);
       markers[i].markerItem.setMap(map);
     	google.maps.event.addListener(markers[i].markerItem, 'click', toggleBounce);
     }
-};
+}
 
   //link infowindow to marker
-  var LinkMarkerToContent=function(marker, contentString){
+  var LinkMarkerToContent=function(marker, contentString, nyt){
+    var items =[];
+    var x='';
+    $.getJSON( nyt,
+       function(data) {
+      $.each(data.response.docs, function(key,val) {
+            //items.push("<li class ='article' id='" + val.web_url + "''>" +  val.headline + "</li>");
+              items.push("<li id='articles'><a href='" + val.web_url + "'>" + val.headline.main + "</a>" + "<p>" + val.snippet + "</a></li>");//
+              x=x + "<li id='articles'><a href='" + val.web_url + "'>" + val.headline.main + "</a>" + "<p>" + val.snippet + "</a></li>";
+              console.log('inside loop');
+              console.log(contentString);
+              console.log(x);
+              console.log(items);
+           });
+         });
+           //but not here outside the loop... but both variables are defined outside the loop... so what am imissing?
+
+  /*    $.ajax({
+               url: nyt,
+               dataType: 'jsonp',
+               callback: 'svc_search_v2_articlesearch',
+               success: function () {
+                 console.log('success');
+               }
+                   });
+*/
+console.log('outside loop');
+console.log(contentString);
+console.log(x);
+console.log(items);
+
     var infowindow = new google.maps.InfoWindow({
       content: contentString
       });
-
+    map.addListener('click',function(){
+      if (infowindow.opened){
+        infowindow.close();
+      }
+    });
     marker.addListener('click', function() {
+      if(infowindow.opened){
+      infowindow.close();
+      infowindow.opened = false;
+    }
+    else{
+
       infowindow.open(marker.get('map'), marker);
-      setTimeout(function () { infowindow.close(); }, 5000);
+      infowindow.opened = true;
+    }
+      //setTimeout(function () { infowindow.close(); }, 5000);
     });
   };
   //bounce markers on click, end after 1.5sec
@@ -142,17 +185,19 @@
   	var self = this;
   	if(self.getAnimation() !== null) {
   		self.setAnimation(null);
-  	} else {
+  	}
+     else {
   		self.setAnimation(google.maps.Animation.BOUNCE);
   		setTimeout(function(){self.setAnimation(null); }, 1500);
   	}
   };
 function initRoutine()
 {
-  var octo = new Octopus;
+  var octo = new Octopus();
   ko.applyBindings(octo);
   google.maps.event.addDomListener(window, 'load', function() {
-    viewThing()});
+    viewThing();}
+                                  );
   }
 function errorHandling(){
   console.log("there was an error in the google load");

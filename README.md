@@ -1,7 +1,16 @@
 # P5-Neighborhood-Map
-To view use : meckmeier.github.io/p5-Neighborhood-Map
+To view use : http://meckmeier.github.io/P5-Neighborhood-Map/index.html
 
 This is a single-page application featuring a map of selected National parks. Included in this application are map markers for each park, a search function to easily find these parks on the map, and a list to support simple browsing of all parks.
+
+Click on parks listed in the left pane to toggle the marker and show the info window.
+You may also click directly on the marker to pop up the info window.
+To hide the marker, you can click on the list item name, the marker itself, or any place on the map.
+
+You can filter the list of parks by typing a search value into the search box to filter both the markers and the list items.
+
+If you are using a mobile device, you can click the hamburger menu to show the list of parks.
+
 
 TO DO: You will then research and implement third-party APIs that provide additional information about each of these locations (such as StreetView images -- apparently StreetView is not considered enough of an api call to complete this task--  I will plan to use the ny times app).
 
