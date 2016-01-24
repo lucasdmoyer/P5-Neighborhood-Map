@@ -5,13 +5,13 @@ var MyListOfPlaces = [
   lng: -104.55890789999999,
   visible: true
 },
- { location: 'Congaree',
+ { location: 'Congaree National Park',
   address: 'South Carolina',
   lat: 33.794999500000003,
   lng: -80.794999500000003,
   visible: true
 },
- { location: 'Everglades',
+ { location: 'Everglades National Park',
   address: 'Florida',
   lat: 25.3656857,
   lng: -82.078363800000005,
@@ -29,7 +29,7 @@ var MyListOfPlaces = [
   lng: -93.053526399999996,
   visible: true
 },
-{ location: 'Joshua Tree',
+{ location: 'Joshua Tree California',
   address: 'California',
   lat: 33.873415000000001,
   lng: -115.9031864,
