@@ -70,7 +70,7 @@ main {
     /* Optionally, we animate the drawer. */
     transition: transform 0.3s ease;
   }
-  a#menu svg {
+  #menu svg {
     visibility:visible;
   }
   #exit {
@@ -119,8 +119,8 @@ main {
     main > #menu:after {
       content: 'The drawer stays open if width > 600px';
     }
-    #menu {
-      visibility:visible;
+    #menu svg{
+      visibility:hidden;
     }
     main p, nav p {
       /*text-decoration: line-through;*/
