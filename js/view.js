@@ -41,6 +41,13 @@ var Octopus = function() {
 
     //BEHAVIORS
     this.goToMarker = function(x) {
+      //if the media width is too small, then close the menuvar mq = window.matchMedia( "(min-width: 500px)" );
+      var mq = window.matchMedia( "(min-width: 600px)" );
+      if (mq.matches) {
+        // do nothing
+      } else {
+        drawer.classList.remove('open');
+      }
         self.chosenMarker(x.location);
         for (i=0; i < nbrMarkers; i++)
           {if (x.location == markers[i].markerItem.title)
@@ -91,12 +98,16 @@ function viewThing() {
     	 mapTypeId: google.maps.MapTypeId.ROADMAP
      };
     map = new google.maps.Map(mapCanvas, mapOptions);
+    var bounds = new google.maps.LatLngBounds();
     menu = menuSetup();
     for (i=0; i< markers.length; i++) {
       LinkMarkerToContent(markers[i].markerItem, markers[i].contentForWindow, markers[i].wikiUrl);
       markers[i].markerItem.setMap(map);
       google.maps.event.addListener(markers[i].markerItem, 'click', toggleBounce);
+      bounds.extend(markers[i].markerItem.position);
     }
+    map.fitBounds(bounds);
+
 }
 
 
@@ -106,6 +117,7 @@ function viewThing() {
       menuControl.addEventListener('click', function(e) {
         drawer.classList.toggle('open');
         e.stopPropagation();
+
       });
       var main = document.querySelector('#map');
       var drawer = document.querySelector('#drawer');
@@ -139,7 +151,7 @@ function viewThing() {
           infowindow.opened = false;
         }
       else{
-        getWikiArticles(wikiUrl,infowindow);
+        getWikiArticles(wikiUrl,infowindow, formattedDefaultStr);
         infowindow.open(marker.get('map'), marker);
         infowindow.opened = true;
         }
@@ -168,21 +180,22 @@ function viewThing() {
     console.log("there was an error in the google load");
     $("#map").append("Error in google map load");
   }
-  function getWikiArticles(wikiURL, infowindow) {
+  function getWikiArticles(wikiURL, infowindow, string) {
+
     $.ajax({
       url: wikiURL,
       dataType: "jsonp",
       timeout: 8000,
-      //jsonp: "callback",
-      success: function ( response) {
+      //jsonp: "callback"
+    })
+      .done (function ( response) {
           var articleStr = response[0];
           console.log(articleStr);
-          var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-
-          console.log(infowindow.content);
-          infowindow.setContent( infowindow.content + '<p><a href="' + url + '">' + 'Wikipedia Link to ' +
+          var url = 'http://en.wikipedia.org/wiki/' + articleStr + " target='_blank'";
+          infowindow.setContent(string + '<p><a href="' + url + '"  target="_blank">' + 'Wikipedia Link to ' +
                 articleStr   + '</a>');
-        }
-      });
-
-    }
+        })
+        .error(function(error){
+          alert('problem with wiki article');
+        })
+      };
